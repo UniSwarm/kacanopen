@@ -36,23 +36,28 @@
 // DO NOT INCLUDE THIS IN A LIBRARY HEADER!
 
 // defined/not defined by CMake
+// #define NDEBUG
 // #define EXHAUSTIVE_DEBUGGING
 
 #define PRINT(x) std::cout << x << std::endl;
-#define WARN(x) PRINT("WARNING: " << x);
-#define ERROR(x) std::cerr << "ERROR: " << x << std::endl;
-#define DUMP(x) PRINT(#x << " = " << std::dec << x);
-#define DUMP_HEX(x) PRINT(#x << " = 0x" << std::hex << x);
 
 #ifdef NDEBUG
+    #define WARN(x)
+    #define ERROR(x)
+    #define DUMP(x)
+    #define DUMP_HEX(x);
 	#define DEBUG(x)
 	#define DEBUG_LOG(x)
 	#define DEBUG_DUMP(x)
-	#define DEBUG_DUMP_HEX(x)
+    #define DEBUG_DUMP_HEX(x)
 
 	#define DEBUG_EXHAUSTIVE(x)
 	#define DEBUG_LOG_EXHAUSTIVE(x)
 #else
+    #define WARN(x) PRINT("WARNING: " << x);
+    #define ERROR(x) std::cerr << "ERROR: " << x << std::endl;
+    #define DUMP(x) PRINT(#x << " = " << std::dec << x);
+    #define DUMP_HEX(x) PRINT(#x << " = 0x" << std::hex << x);
 	#define DEBUG(x) if (debug) { x }
 	#define DEBUG_LOG(x) if (debug) { PRINT("DEBUG: " << x); }
 	#define DEBUG_DUMP(x) if (debug) { PRINT("DEBUG: " << #x << " = " << std::dec << x); }
